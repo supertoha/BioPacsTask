@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { authentication } from '../../services/projectsapi';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { authentication } from '../../services/authenticator';
 
 const Login = () => {
     const [password, setPassword] = useState('');
@@ -26,6 +26,7 @@ const Login = () => {
                         if (result.data?.ok === false) {
                             setMessage('Password or username incorrect');
                         } else {
+                            localStorage.setItem('bearer', result.data.result.accessToken)
                             setMessage('');
                             navigate('/create');
                         }

@@ -1,6 +1,5 @@
-export interface Project {
+export interface Project extends ProjectData {
     id: string;
-    name: string;
 }
 
 export interface BaseResponse<T> {
@@ -21,9 +20,16 @@ export interface ProjectData {
     name: string,
     isEnabled: boolean,
     acceptNewVisits: boolean,
-    imageType: number
+    imageType: ImageType
 }
 
 export interface CreateProjectResponse {
     projectId: string
 }
+
+export enum ImageType {
+    None = 0,
+    Jpg = 1,
+    DICOM = 2
+}
+

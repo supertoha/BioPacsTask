@@ -1,22 +1,15 @@
 import axios, { AxiosResponse } from 'axios';
 import { apiUrl } from '../settings';
-import { BaseResponse, CreateProjectResponse, LoginResult, Project, ProjectData } from '../types';
+import { BaseResponse, CreateProjectResponse, Project, ProjectData } from '../types';
+import { getAuthorizationHeaders } from './authenticator';
 
-const getAuthorizationKey = () => localStorage.getItem('bearer');
-const getAuthorizationHeaders = () => ({
-    "Access-Control-Allow-Origin": "*",
-        "Authorization": `Bearer ${getAuthorizationKey()}`
-});
+export const getProjects = () => axios.get<BaseResponse<Project[]>>(`${apiUrl}/Projects`, { headers: getAuthorizationHeaders() });
 
-export const getProjects = () => axios.get<BaseResponse<Project[]>>(`${apiUrl}/Projects`,
-    {
-        headers: getAuthorizationHeaders()
-    });
-
-export async function authentication(login: string, password: string) : Promise<AxiosResponse<BaseResponse<LoginResult>>> {
-    return await axios.post<BaseResponse<LoginResult>>(`${apiUrl}/Authentication?login=${login}&password=${password}`);
-}
+export const getProject = (id: string) => axios.get<BaseResponse<Project>>(`${apiUrl}/Project?id=${id}`, { headers: getAuthorizationHeaders() });
 
 export const createProject = async (project: ProjectData): Promise<AxiosResponse<BaseResponse<CreateProjectResponse>>> => {
-    return await axios.post<BaseResponse<LoginResult>>(`${apiUrl}/Project`, project, { headers: getAuthorizationHeaders() });
+    return await axios.post<BaseResponse<CreateProjectResponse>>(`${apiUrl}/Project`, project, { headers: getAuthorizationHeaders() });
 };
+
+
+

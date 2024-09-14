@@ -3,10 +3,6 @@ import Login from './pages/login';
 import Projects from './pages/projects';
 import CreateProject from './pages/createproject';
 import ViewProject from './pages/viewproject';
-
-{
-    /* The following line can be included in your src/index.js or App.js file */
-}
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter(

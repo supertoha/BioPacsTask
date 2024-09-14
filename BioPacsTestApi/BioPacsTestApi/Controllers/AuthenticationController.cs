@@ -1,5 +1,6 @@
 ﻿using BioPacsTestApi.Models.Database;
 using BioPacsTestApi.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +50,13 @@ namespace BioPacsTestApi.Controllers
             return new ResponseBase<LoginResult>();
         }
 
+        [Authorize]
+        [HttpGet(Name = "Get")]
+        public async Task<bool> Get()
+        {
+            return true;
+        }
+
         private JwtSecurityToken GenerateToken(string userName)
         {
             var claims = new List<Claim>
@@ -68,7 +76,7 @@ namespace BioPacsTestApi.Controllers
             issuer: issuer,
             audience: audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMonths(1), // Refresh Token is not implemented!
+            expires: DateTime.UtcNow.AddDays(1), // Refresh Token is not implemented!
             signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                 SecurityAlgorithms.HmacSha256)
             );

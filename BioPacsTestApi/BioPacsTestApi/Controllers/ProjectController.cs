@@ -18,7 +18,7 @@ namespace BioPacsTestApi.Controllers
 
         private readonly DatabaseContext _databaseContext;
 
-        [HttpPost(Name = "Create")]
+        [HttpPost(Name = "project/Create")]
         [Authorize]
         public async Task<ResponseBase<CreateProjectResponse>> Post(CreateProjectRequest createProject)
         {
@@ -29,7 +29,10 @@ namespace BioPacsTestApi.Controllers
             await this._databaseContext.Projects.AddAsync(new Project
             {
                 Name = createProject.Name,
-                Id = projectId
+                Id = projectId,
+                AcceptNewVisits = createProject.AcceptNewVisits,
+                ImageType = createProject.ImageType, 
+                IsEnabled = createProject.IsEnabled
             });
             await this._databaseContext.SaveChangesAsync();
 
@@ -43,7 +46,7 @@ namespace BioPacsTestApi.Controllers
             };
         }
 
-        [HttpGet(Name = "Get")]
+        [HttpGet(Name = "project/Get")]
         [Authorize]
         public async Task<ResponseBase<Project>> Get(Guid id)
         {
