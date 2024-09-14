@@ -1,5 +1,8 @@
 using BioPacsTestApi.Models.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 internal class Program
 {
@@ -14,18 +17,35 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql("Host=localhost;Database=BioPacsProjects;Username=postgres;Password=admin;"/*builder.Configuration.GetConnectionString("DatabaseContext")*/));
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseContext")));
+
+
+        // JWT authentication
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]))
+                };
+            });
 
         var app = builder.Build();
 
-        //app.Services.GetService<DatabaseContext>().Database.EnsureCreated();
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var scopedService = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-            scopedService.Database.EnsureDeleted();
-            scopedService.Database.EnsureCreated();
-        }
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var scopedService = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        //    scopedService.Database.EnsureDeleted();
+            
+        //    scopedService.Database.EnsureCreated();
+        //}
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
