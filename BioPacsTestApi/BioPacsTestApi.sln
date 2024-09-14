@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioPacsTestApi", "BioPacsTestApi\BioPacsTestApi.csproj", "{AFDDA4C9-2CC1-45AA-A93C-43CC637610A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFDDA4C9-2CC1-45AA-A93C-43CC637610A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFDDA4C9-2CC1-45AA-A93C-43CC637610A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFDDA4C9-2CC1-45AA-A93C-43CC637610A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFDDA4C9-2CC1-45AA-A93C-43CC637610A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86F747F2-E13D-4561-BFFF-552DB8901688}
+	EndGlobalSection
+EndGlobal
