@@ -1,5 +1,5 @@
-﻿using BioPacsTestApi.Models;
-using BioPacsTestApi.Models.Database;
+﻿using BioPacsTestApi.Models.Database;
+using BioPacsTestApi.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +25,7 @@ namespace BioPacsTestApi.Controllers
         private readonly IConfiguration _configuration;
 
         [HttpPost(Name = "Login")]
-        public async Task<LoginResult> Post([Required] string login, [Required] string password)
+        public async Task<ResponseBase<LoginResult>> Post([Required] string login, [Required] string password)
         {
             using var hash = SHA256.Create();
             var byteArray = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -36,14 +36,17 @@ namespace BioPacsTestApi.Controllers
             if(authenticated)
             {
                 var token = this.GenerateToken(login);
-                return new LoginResult 
+                return new ResponseBase<LoginResult>
                 {
-                    Ok = true, 
-                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token) 
+                    Ok = true,
+                    Result = new LoginResult
+                    {
+                        AccessToken = new JwtSecurityTokenHandler().WriteToken(token)
+                    }
                 };
             }
 
-            return new LoginResult();
+            return new ResponseBase<LoginResult>();
         }
 
         private JwtSecurityToken GenerateToken(string userName)

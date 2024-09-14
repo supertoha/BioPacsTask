@@ -1,10 +1,9 @@
-﻿using System;
+﻿using BioPacsTestApi.Models.Database;
 
-namespace BioPacsTestApi.Models.Database
+namespace BioPacsTestApi.Models.Requests
 {
-    public class Project
+    public class CreateProjectRequest
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsEnabled { get; set; }
         public bool AcceptNewVisits { get; set; }

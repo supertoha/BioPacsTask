@@ -1,8 +1,7 @@
-﻿namespace BioPacsTestApi.Models
+﻿namespace BioPacsTestApi.Models.Responses
 {
     public class LoginResult
     {
-        public bool Ok { get; set; }
         public string AccessToken { get; set; }
     }
 }

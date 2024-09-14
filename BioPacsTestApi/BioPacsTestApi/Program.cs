@@ -38,14 +38,11 @@ internal class Program
 
         var app = builder.Build();
 
-
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //    var scopedService = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-        //    scopedService.Database.EnsureDeleted();
-            
-        //    scopedService.Database.EnsureCreated();
-        //}
+        using (var scope = app.Services.CreateScope())
+        {
+            var scopedService = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            scopedService.Database.EnsureCreated();
+        }
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
