@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { createProject } from '../../services/projectsapi';
 import { isAuthorized } from '../../services/authenticator';
@@ -26,20 +26,22 @@ const CreateProject = () => {
     }, []);
 
     return (
-        <Container>
-            {isLoading && <Spinner animation="grow" />}
-            {!authorized && !isLoading && <UnauthorizedLabel/>}
-            {authorized && <Row className="justify-content-center">
-                <ProjectEditor canEdit={true} project={{ name: '', isEnabled: true, acceptNewVisits: false, imageType: ImageType.None }} onSave={async (project: ProjectData) =>
-                {
-                    const response = await createProject({ name: project.name, isEnabled: project.isEnabled, acceptNewVisits: project.acceptNewVisits, imageType: project.imageType }); 
-                    if (response.data?.ok === true) { 
-                        navigate(`/view/${response.data.result.projectId}`) 
-                    }
-
-                }} />               
-            </Row>}
-        </Container>
+        <Card>
+            <Card.Header>Create project</Card.Header>
+            <Card.Body>
+                {isLoading && <Spinner animation="grow" />}
+                {!authorized && !isLoading && <UnauthorizedLabel/>}
+                {authorized && <>
+                    <ProjectEditor canEdit={true} project={{ name: '', isEnabled: true, acceptNewVisits: false, imageType: ImageType.None }} onSave={async (project: ProjectData) =>
+                    {
+                        const response = await createProject({ name: project.name, isEnabled: project.isEnabled, acceptNewVisits: project.acceptNewVisits, imageType: project.imageType }); 
+                        if (response.data?.ok === true) { 
+                            navigate(`/all`) 
+                        }
+                    }} />               
+                    </>}
+            </Card.Body>
+        </Card>
     );
 };
 

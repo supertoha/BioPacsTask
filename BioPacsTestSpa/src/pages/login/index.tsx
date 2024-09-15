@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Container, Row, Stack } from 'react-bootstrap';
+import { Card, Stack } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { authentication } from '../../services/authenticator';
 
@@ -12,27 +12,34 @@ const Login = () => {
     const navigate = useNavigate();
 
     return (
-        <Container>
-            <Row className="justify-content-center">
+        <Card>
+            <Card.Header>Login</Card.Header>
+            <Card.Body>
                 <Stack gap={2}>
 
                     <Form onSubmit={async (e) => {
                         e.preventDefault();
                         if (!login || !password) {
                             setMessage('Please, fill login and password');
+                            return;
                         }
 
-                        const result = await authentication(login, password);
-                        if (result.data?.ok === false) {
-                            setMessage('Password or username incorrect');
-                        } else {
-                            localStorage.setItem('bearer', result.data.result.accessToken)
-                            setMessage('');
-                            navigate('/create');
+                        try {
+                            const result = await authentication(login, password);
+
+                            if (result.data?.ok === false) {
+                                setMessage('Password or username incorrect');
+                            } else {
+                                localStorage.setItem('bearer', result.data.result.accessToken)
+                                setMessage('');
+                                navigate('/create');
+                            }
+                        } catch {
+                            setMessage('Unexpected server error');
                         }
                     }}>
 
-                        <Form.Group className="form-outline mb-4" controlId="formGroupLogin">
+                        <Form.Group className="form-outline mb-4" controlId="formGroupLogin" >
                             <Form.Label>Login</Form.Label>
                             <Form.Control type="login" placeholder="Admin" onChange={(x) => setLogin(x.target.value)} value={login} />
                         </Form.Group>
@@ -42,18 +49,27 @@ const Login = () => {
                             <Form.Control type="password" placeholder="password" onChange={(x) => setPassword(x.target.value)} value={password} />
                         </Form.Group>
 
-                        <p>{message}</p>
+                        <span className="validation_message">{message}</span>
 
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" className="me-2">
                             Login
                         </Button>
+
+                        <Button variant="light" onClick={(e) =>
+                        {
+                            e.preventDefault();
+                            setLogin('');
+                            setPassword('');
+                            setMessage('');
+                        }}>
+                            Cancel
+                        </Button>
+
                     </Form>
 
                 </Stack>
-            </Row>
-        </Container>
-        
-        
+            </Card.Body>
+        </Card>
     );
 };
 
