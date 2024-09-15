@@ -8,8 +8,9 @@
 2. node.js
 
 ## Launch
-1. Build and Run BioPacsTestApi project
-2. go to BioPacsTestSpa/src/settings.tsx and replace apiUrl
-3. cmd cd BioPacsTestSpa/
-4. cmd npm i
-5. cmd npm run dev
+1. Configure PostgreSQL ConnectionString - > BioPacsTestApi/appsettings.json
+2. Build and Run BioPacsTestApi project
+3. go to BioPacsTestSpa/src/settings.tsx and replace apiUrl
+4. cmd cd BioPacsTestSpa/
+5. cmd npm i
+6. cmd npm run dev
