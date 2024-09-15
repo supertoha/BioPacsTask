@@ -45,7 +45,7 @@ const Login = () => {
                         </Form.Group>
 
                         <Form.Group className="form-outline mb-4" controlId="formGroupPassword">
-                            <Form.Label>Login</Form.Label>
+                            <Form.Label>Password</Form.Label>
                             <Form.Control type="password" placeholder="password" onChange={(x) => setPassword(x.target.value)} value={password} />
                         </Form.Group>
 
