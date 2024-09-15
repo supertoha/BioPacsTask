@@ -6,6 +6,7 @@ import { getProjects } from "../../services/projectsapi";
 import { useNavigate } from "react-router-dom";
 import { isAuthorized } from '../../services/authenticator';
 import { UnauthorizedLabel } from '../../controls/UnauthorizedLabel';
+import { Preloader } from '../../controls/Preloader';
 
 const Projects = () => {
 
@@ -34,7 +35,7 @@ const Projects = () => {
         <Card className="wide">
             <Card.Header>All projects</Card.Header>
             <Card.Body>
-                {isLoading && <Spinner animation="grow" />}
+                {isLoading && <Preloader/>}
                 {!isLoading && !authorized && <UnauthorizedLabel/>}
                 {authorized && !isLoading &&
                     <>

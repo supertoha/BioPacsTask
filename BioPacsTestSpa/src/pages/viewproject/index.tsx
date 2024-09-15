@@ -7,6 +7,7 @@ import { UnauthorizedLabel } from '../../controls/UnauthorizedLabel';
 import Spinner from 'react-bootstrap/Spinner';
 import { ProjectEditor } from '../../controls/ProjectEditor';
 import { BaseResponse, Project, ProjectData } from '../../types';
+import { Preloader } from '../../controls/Preloader';
 
 const ViewProject = () => {
 
@@ -39,8 +40,8 @@ const ViewProject = () => {
         <Card>
             <Card.Header>Project</Card.Header>
             <Card.Body>
-            {isLoading && <Spinner animation="grow" />}
-            {!authorized && !isLoading && <UnauthorizedLabel />}
+                {isLoading && <Preloader/>}
+            {!authorized && !isLoading && <UnauthorizedLabel/>}
             {authorized && data?.result && !isLoading &&
                 <>
                     <p><Button variant="link" onClick={() => navigate('/all')}>All projects</Button></p>

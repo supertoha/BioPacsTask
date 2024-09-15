@@ -7,6 +7,7 @@ import { UnauthorizedLabel } from '../../controls/UnauthorizedLabel';
 import Spinner from 'react-bootstrap/Spinner';
 import { ProjectEditor } from '../../controls/ProjectEditor';
 import { ImageType, ProjectData } from '../../types';
+import { Preloader } from '../../controls/Preloader';
 
 const CreateProject = () => {
 
@@ -29,7 +30,7 @@ const CreateProject = () => {
         <Card>
             <Card.Header>Create project</Card.Header>
             <Card.Body>
-                {isLoading && <Spinner animation="grow" />}
+                {isLoading && <Preloader/>}
                 {!authorized && !isLoading && <UnauthorizedLabel/>}
                 {authorized && <>
                     <ProjectEditor canEdit={true} project={{ name: '', isEnabled: true, acceptNewVisits: false, imageType: ImageType.None }} onSave={async (project: ProjectData) =>
